@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 mp = MediaPlayer.create(MainActivity.this, mMP3s.get(position));
                 mp.start();
                 tv.append("START page" + position + "\n");
-
+                isPaused = false;
             }
             mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 public void onCompletion(MediaPlayer m) {
