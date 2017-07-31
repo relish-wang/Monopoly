@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ViewPager mViewPager;
-    MediaPlayer mp;
+    MediaPlayer player;
     private boolean isPaused;
     private int pausedPage = -1;
     List<Integer> mMP3s = new ArrayList<Integer>() {
@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (!isPaused) {
-                    mp.release();
-                    mp = MediaPlayer.create(MainActivity.this, mMP3s.get(position));
-                    mp.start();
+                    player.release();
+                    player = MediaPlayer.create(MainActivity.this, mMP3s.get(position));
+                    player.start();
                     tv.append("START page" + position + "\n");
                 } else {
                     //do nothing.
@@ -105,35 +105,35 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     int position = mViewPager.getCurrentItem();
-                    if (mp != null) {
+                    if (player != null) {
                         if (isPaused) {
                             if (pausedPage == position) {
-                                mp.start();
+                                player.start();
                                 tv.append("page" + position + " CONTINUE\n");
                             } else {
-                                mp = MediaPlayer.create(MainActivity.this, mMP3s.get(position));
-                                mp.start();
+                                player = MediaPlayer.create(MainActivity.this, mMP3s.get(position));
+                                player.start();
                                 tv.append("START page" + position + "\n");
                             }
                             isPaused = false;
                         } else {
-                            mp.pause();
+                            player.pause();
                             isPaused = true;
                             pausedPage = position;
                             tv.append("PAUSE page" + position + "\n");
                         }
                     } else {
-                        mp = MediaPlayer.create(MainActivity.this, mMP3s.get(position));
-                        mp.start();
+                        player = MediaPlayer.create(MainActivity.this, mMP3s.get(position));
+                        player.start();
                         tv.append("START page" + position + "\n");
                         isPaused = false;
                     }
-                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         public void onCompletion(MediaPlayer m) {
                             Toast.makeText(MainActivity.this,
                                     "COMPLETED", Toast.LENGTH_LONG).show();
                             // Set the MainActivity member to null
-                            MainActivity.this.mp = null;
+                            MainActivity.this.player = null;
                         }
                     });
                 }
