@@ -1,4 +1,4 @@
-package wang.relish.practice.mp3;
+package wang.relish.monopoly;
 
 import org.junit.Test;
 
