@@ -18,13 +18,27 @@ public class DBHelper extends SQLiteOpenHelper {
         super(App.CONTEXT, DB_NAME, null, VERSION);
     }
 
+    private static final String CREATE_USER = "create table user(" +
+            "id integer primary key," +
+            "name text," +
+            "money double);";
+    private static final String CREATE_RECORD = "create table record(" +
+            "id integer primary key," +
+            "createTime timestamp," +
+            "payerId integer," +
+            "payeeId integer," +
+            "money double);";
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO
+        db.execSQL(CREATE_USER);
+        db.execSQL(CREATE_RECORD);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO 先删再建
+        db.execSQL("DROP TABLE IF EXISTS user");
+        db.execSQL("DROP TABLE IF EXISTS record");
+        onCreate(db);
     }
 }
